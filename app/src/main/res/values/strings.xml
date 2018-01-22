@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ceegan-SubBook</string>
+    <string name="cancel_action">Cancel</string>
+    <string name="add_subscription">Add</string>
+    <string name="sub_name">Name</string>
+    <string name="sub_date">Date (yyyy-mm-dd)</string>
+    <string name="sub_charge">Cost</string>
+    <string name="sub_comment">Comment</string>
+</resources>
