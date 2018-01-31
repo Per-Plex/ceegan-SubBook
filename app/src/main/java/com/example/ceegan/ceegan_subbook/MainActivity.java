@@ -4,7 +4,6 @@ import android.app.DialogFragment;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
 
 
         adapter = new myAdapter(this, R.layout.activity_main, subscriptions);
-        ListView listView = findViewById(R.id.list);
+        final ListView listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
 
         FloatingActionButton fab = findViewById(R.id.addSub);
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
                 dialog.show(getFragmentManager(), "Add Subscription");
             }
         });
-
     }
 
     @Override
