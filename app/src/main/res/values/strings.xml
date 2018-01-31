@@ -6,4 +6,5 @@
     <string name="sub_date">Date (yyyy-mm-dd)</string>
     <string name="sub_charge">Cost</string>
     <string name="sub_comment">Comment</string>
+    <string name="edit_subscription">Edit</string>
 </resources>

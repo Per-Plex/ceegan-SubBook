@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -36,6 +37,21 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
             public void onClick(View view) {
                 AddSubscription dialog = new AddSubscription();
                 dialog.show(getFragmentManager(), "Add Subscription");
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Bundle args = new Bundle();
+                args.putString("name", subscriptions.get(i).getName());
+                args.putString("date", subscriptions.get(i).getDate());
+                args.putString("cost", String.valueOf(subscriptions.get(i).getCost()));
+                args.putString("comment", subscriptions.get(i).getComment());
+
+                DisplaySubscription dialog = new DisplaySubscription();
+                dialog.setArguments(args);
+                dialog.show(getFragmentManager(), "Edit Subscription");
             }
         });
     }

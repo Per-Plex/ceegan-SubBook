@@ -6,9 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.widget.EditText;
 
 /**
  * Created by Ceegan on 2018-01-21.
@@ -38,7 +36,7 @@ public class AddSubscription extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
 
-        builder.setView(layoutInflater.inflate(R.layout.subscription_info, null))
+        builder.setView(layoutInflater.inflate(R.layout.add_subscription, null))
                 .setPositiveButton(R.string.add_subscription, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

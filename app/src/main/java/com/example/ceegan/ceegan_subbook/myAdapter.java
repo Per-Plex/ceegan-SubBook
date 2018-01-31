@@ -49,6 +49,8 @@ public class myAdapter extends ArrayAdapter<subscription> {
                 notifyDataSetChanged();
             }
         });
+
+
         return v;
     }
 }
