@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
                 dialog.show(getFragmentManager(), "Edit Subscription");
             }
         });
+        updateTotal();
     }
 
     @Override
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
                 Float.parseFloat(cost.getText().toString()), comment.getText().toString()));
 
         adapter.notifyDataSetChanged();
+        updateTotal();
     }
 
     @Override
@@ -84,6 +87,17 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
         temp.setComment(comment.getText().toString());
 
         adapter.notifyDataSetChanged();
+        updateTotal();
     }
 
+    public void updateTotal(){
+        TextView total = findViewById(R.id.total);
+        float sum = 0;
+
+        for (subscription sub: subscriptions) {
+            sum += sub.getCost();
+        }
+
+        total.setText("Total: $"+ String.valueOf(sum));
+    }
 }
