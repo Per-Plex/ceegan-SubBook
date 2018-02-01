@@ -38,7 +38,7 @@ public class myAdapter extends ArrayAdapter<subscription> {
         TextView cost = v.findViewById(R.id.cost);
         title.setText(subscriptions.get(position).getName());
         date.setText(subscriptions.get(position).getDate());
-        cost.setText("$"+String.valueOf(subscriptions.get(position).getCost()));
+        cost.setText("$"+String.format("%.2f", subscriptions.get(position).getCost()));
 
         ImageButton imageButton = v.findViewById(R.id.delete);
 
