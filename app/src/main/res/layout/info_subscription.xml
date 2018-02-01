@@ -3,33 +3,37 @@
     android:layout_width="250dp"
     android:layout_height="wrap_content">
 
-    <TextView
+    <EditText
         android:id="@+id/subscription_name"
         android:layout_width="match_parent"
+        android:inputType="text"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:contentDescription="@string/app_name"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="30sp" />
-    <TextView
+    <EditText
         android:id="@+id/subscription_date"
+        android:inputType="date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="4dp"
         android:textSize="18sp"/>
-    <TextView
+    <EditText
         android:id="@+id/subscription_cost"
+        android:inputType="numberDecimal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="4dp"
         android:textSize="18sp"/>
-    <TextView
+    <EditText
         android:id="@+id/subscription_comment"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"

@@ -12,7 +12,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements AddSubscription.AddSubscriptionListener{
+public class MainActivity extends AppCompatActivity implements AddSubscription.AddSubscriptionListener, DisplaySubscription.EditSubscriptionListener{
 
     private ArrayList<subscription> subscriptions = new ArrayList<>();
     private myAdapter adapter;
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
                 args.putString("date", subscriptions.get(i).getDate());
                 args.putString("cost", String.valueOf(subscriptions.get(i).getCost()));
                 args.putString("comment", subscriptions.get(i).getComment());
+                args.putInt("position", i);
 
                 DisplaySubscription dialog = new DisplaySubscription();
                 dialog.setArguments(args);
@@ -65,6 +66,22 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
 
         subscriptions.add(new subscription(name.getText().toString(), data.getText().toString(),
                 Float.parseFloat(cost.getText().toString()), comment.getText().toString()));
+
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onEditPositive(DialogFragment dialogFragment){
+        subscription temp = subscriptions.get(dialogFragment.getArguments().getInt("position"));
+        EditText name = dialogFragment.getDialog().findViewById(R.id.subscription_name);
+        EditText data = dialogFragment.getDialog().findViewById(R.id.subscription_date);
+        EditText cost = dialogFragment.getDialog().findViewById(R.id.subscription_cost);
+        EditText comment = dialogFragment.getDialog().findViewById(R.id.subscription_comment);
+
+        temp.setName(name.getText().toString());
+        temp.setDate(data.getText().toString());
+        temp.setCost(Float.valueOf(cost.getText().toString().replace("$", "")));
+        temp.setComment(comment.getText().toString());
 
         adapter.notifyDataSetChanged();
     }
