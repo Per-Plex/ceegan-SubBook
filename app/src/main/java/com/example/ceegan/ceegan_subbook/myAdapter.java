@@ -47,6 +47,7 @@ public class myAdapter extends ArrayAdapter<subscription> {
             public void onClick(View view) {
                 subscriptions.remove(position);
                 notifyDataSetChanged();
+                ((MainActivity) getContext()).updateTotal();
             }
         });
 

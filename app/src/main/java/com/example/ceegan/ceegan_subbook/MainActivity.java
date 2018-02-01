@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
         subscriptions.add(new subscription("Amazon Prime", "2016-01-01", 9.99f, "Worth"));
         subscriptions.add(new subscription("World of Warcraft", "2010-12-25", 15.99f, "God Tier"));
 
-
         adapter = new myAdapter(this, R.layout.activity_main, subscriptions);
         final ListView listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
