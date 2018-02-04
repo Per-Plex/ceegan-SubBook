@@ -14,17 +14,25 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * Created by Ceegan on 2018-01-21.
+ * Dialog to add subscription
  */
 
 public class AddSubscription extends DialogFragment {
 
+    /**
+     * listener for the main activity
+     */
     public interface AddSubscriptionListener{
         void onDialogPositive(DialogFragment dialogFragment);
     }
 
     AddSubscriptionListener listener;
 
+    /**
+     * Attach method for main activity
+     *
+     * @param activity current activity
+     */
     @Override
     public void onAttach(Activity activity){
         super.onAttach(activity);
@@ -36,12 +44,19 @@ public class AddSubscription extends DialogFragment {
         }
     }
 
+    /**
+     * Creates the dialog, sets text watcher, error checks values, and displays dialog
+     *
+     * @param savedInstanceState main activity instance
+     * @return Dialog instance
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         final View content = layoutInflater.inflate(R.layout.add_subscription, null);
 
+        // Sets dialog buttons and content
         builder.setCancelable(true).setView(content)
                 .setPositiveButton(R.string.add_subscription, new DialogInterface.OnClickListener() {
             @Override
@@ -55,6 +70,7 @@ public class AddSubscription extends DialogFragment {
             }
         });
 
+        // Text watcher for date
         final EditText editText = content.findViewById(R.id.date);
 
         editText.addTextChangedListener(new TextWatcher() {
@@ -63,6 +79,14 @@ public class AddSubscription extends DialogFragment {
 
             }
 
+            /**
+             * Inputs '-' at desired locations for proper date inputs
+             *
+             * @param charSequence
+             * @param i
+             * @param i1
+             * @param i2
+             */
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String text = editText.getText().toString();
@@ -84,6 +108,8 @@ public class AddSubscription extends DialogFragment {
 
             }
         });
+
+        // Error checks before closing dialog
         final AlertDialog dialog = builder.create();
         dialog.show();
 

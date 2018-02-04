@@ -34,12 +34,17 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
     private ListView listView;
     private static final String FILENAME = "subscriptions_list.sav";
 
+    /**
+     * Sets the list view, intializes floating action button, and sets the item click listener
+     * @param savedInstanceState instance of the program
+     */
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listView = findViewById(R.id.list);
 
+        // Sets the floating action button for add subscription
         FloatingActionButton fab = findViewById(R.id.addSub);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +54,16 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
             }
         });
 
+        // Sets the item click listener for edit subscriptions
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /**
+             * Sends the name, date, cost, comment, and position to the display subscriptions dialog
+             *
+             * @param adapterView
+             * @param view current view
+             * @param i position
+             * @param l address
+             */
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Bundle args = new Bundle();
@@ -66,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
         });
     }
 
+    /**
+     * Listener for add subscription
+     */
     @Override
     public void onDialogPositive(DialogFragment dialogFragment){
         EditText name = dialogFragment.getDialog().findViewById(R.id.name);
@@ -80,6 +97,12 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
         updateTotal();
     }
 
+    /**
+     * Listener for edit subscription
+     *
+     * @param dialogFragment a fragement of the dialog for main activity
+     * @param pos position of the edited subscription in the array
+     */
     @Override
     public void onEditPositive(DialogFragment dialogFragment, int pos){
         subscription temp = subscriptions.get(pos);
@@ -97,6 +120,9 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
         updateTotal();
     }
 
+    /**
+     * Initializes the adpater, view, and total
+     */
     @Override
     public void onStart(){
         super.onStart();
@@ -108,6 +134,9 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
         updateTotal();
     }
 
+    /**
+     * Updates the total cost
+     */
     public void updateTotal(){
         TextView total = findViewById(R.id.total);
         float sum = 0;
@@ -120,6 +149,9 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
         saveInFile();
     }
 
+    /**
+     * Loads the saved subscriptions from file
+     */
     private void loadFromFile(){
         try {
             FileInputStream fis = openFileInput(FILENAME);
@@ -133,9 +165,11 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
         }
     }
 
+    /**
+     * Saves the subscriptions array
+     */
     private void saveInFile(){
         try {
-            Log.v("thing", "memes");
             FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
             Gson gson = new Gson();

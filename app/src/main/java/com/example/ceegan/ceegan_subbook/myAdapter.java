@@ -11,13 +11,20 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by Ceegan on 2018-01-28.
+ * Custom array adapter for subscriptions
  */
 
 public class myAdapter extends ArrayAdapter<subscription> {
 
     private ArrayList<subscription> subscriptions = new ArrayList<>();
 
+    /**
+     * Constructor for the adapter
+     *
+     * @param context main activity context
+     * @param textViewResourceID the resourece the adapter is handling
+     * @param objects the objects the adapter handles
+     */
     public myAdapter(Context context, int textViewResourceID, ArrayList<subscription> objects){
         super(context, textViewResourceID, objects);
         subscriptions = objects;
@@ -28,6 +35,11 @@ public class myAdapter extends ArrayAdapter<subscription> {
         return super.getCount();
     }
 
+    /**
+     * Creates the list view, sets all the values, and adds a listener to the delete button
+     *
+     * @return the view of the main screen
+     */
     @Override
     public View getView(final int position, View convertView, ViewGroup parent){
 

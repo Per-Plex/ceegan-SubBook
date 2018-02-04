@@ -15,17 +15,30 @@ import android.widget.Toast;
 
 
 /**
- * Created by Ceegan on 2018-01-30.
+ * Displays the complete info of the subscription when clicked
  */
 
 public class DisplaySubscription extends DialogFragment {
 
+
+    /**
+     * Listener for the main activity
+     */
     public interface EditSubscriptionListener{
+        /**
+         *
+         * @param dialogFragment a fragement of the dialog for main activity
+         * @param position position of the item edited in subscriptions
+         */
         void onEditPositive(DialogFragment dialogFragment, int position);
     }
 
     EditSubscriptionListener listener;
 
+    /**
+     * Attach method for the main activity
+     * @param activity the current activity
+     */
     @Override
     public void onAttach(Activity activity){
         super.onAttach(activity);
@@ -37,6 +50,13 @@ public class DisplaySubscription extends DialogFragment {
         }
     }
 
+
+    /**
+     * Creates the dialog, sets listeners, sets textwatchers, error checks for input, and displays
+     *
+     * @param savedInstanceState main activity instance
+     * @return
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -44,6 +64,7 @@ public class DisplaySubscription extends DialogFragment {
         final View content = layoutInflater.inflate(R.layout.info_subscription, null);
         final Bundle args = getArguments();
 
+        // Setting the content
         builder.setView(content)
                 .setPositiveButton(R.string.edit_subscription, new DialogInterface.OnClickListener() {
                     @Override
@@ -58,7 +79,7 @@ public class DisplaySubscription extends DialogFragment {
             }
         });
 
-
+        // Setting the info for the subscription
         EditText name = content.findViewById(R.id.subscription_name);
         final EditText date = content.findViewById(R.id.subscription_date);
         EditText cost = content.findViewById(R.id.subscription_cost);
@@ -69,13 +90,21 @@ public class DisplaySubscription extends DialogFragment {
         cost.setText(args.getString("cost"));
         comment.setText(args.getString("comment"));
 
-
+        // Textwatcher for date
         date.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
 
+            /**
+             * Appends '-' at desired locations for proper date input
+             *
+             * @param charSequence
+             * @param i
+             * @param i1
+             * @param i2
+             */
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String text = date.getText().toString();
@@ -98,6 +127,8 @@ public class DisplaySubscription extends DialogFragment {
             }
         });
 
+
+        // Error checking values before closing dialog
         final AlertDialog dialog = builder.create();
         dialog.show();
 
