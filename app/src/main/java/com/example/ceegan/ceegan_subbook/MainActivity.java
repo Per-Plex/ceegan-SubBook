@@ -1,42 +1,51 @@
 package com.example.ceegan.ceegan_subbook;
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements AddSubscription.AddSubscriptionListener, DisplaySubscription.EditSubscriptionListener{
 
-    private ArrayList<subscription> subscriptions = new ArrayList<>();
+    private ArrayList<subscription> subscriptions;
     private myAdapter adapter;
+    private ListView listView;
+    private static final String FILENAME = "subscriptions_list.sav";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        subscriptions.add(new subscription("Netflix", "1997-04-22", 10.99f, "Nibba"));
-        subscriptions.add(new subscription("Amazon Prime", "2016-01-01", 9.99f, "Worth"));
-        subscriptions.add(new subscription("World of Warcraft", "2010-12-25", 15.99f, "God Tier"));
-
-        adapter = new myAdapter(this, R.layout.activity_main, subscriptions);
-        final ListView listView = findViewById(R.id.list);
-        listView.setAdapter(adapter);
+        listView = findViewById(R.id.list);
 
         FloatingActionButton fab = findViewById(R.id.addSub);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddSubscription dialog = new AddSubscription();
-                dialog.show(getFragmentManager(), "Add Subscription");
+                AddSubscription thing = new AddSubscription();
+                thing.show(getFragmentManager(), "Add subscription");
             }
         });
 
@@ -55,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
                 dialog.show(getFragmentManager(), "Edit Subscription");
             }
         });
-        updateTotal();
     }
 
     @Override
@@ -73,8 +81,8 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
     }
 
     @Override
-    public void onEditPositive(DialogFragment dialogFragment){
-        subscription temp = subscriptions.get(dialogFragment.getArguments().getInt("position"));
+    public void onEditPositive(DialogFragment dialogFragment, int pos){
+        subscription temp = subscriptions.get(pos);
         EditText name = dialogFragment.getDialog().findViewById(R.id.subscription_name);
         EditText data = dialogFragment.getDialog().findViewById(R.id.subscription_date);
         EditText cost = dialogFragment.getDialog().findViewById(R.id.subscription_cost);
@@ -89,6 +97,17 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
         updateTotal();
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        Log.i("LifeCycle --->", "onStart is called");
+        TextView total = findViewById(R.id.total);
+        loadFromFile();
+        adapter = new myAdapter(this, R.layout.activity_main, subscriptions);
+        listView.setAdapter(adapter);
+        updateTotal();
+    }
+
     public void updateTotal(){
         TextView total = findViewById(R.id.total);
         float sum = 0;
@@ -98,5 +117,35 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
         }
 
         total.setText("Total: $"+ String.valueOf(sum));
+        saveInFile();
     }
+
+    private void loadFromFile(){
+        try {
+            FileInputStream fis = openFileInput(FILENAME);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Gson gson = new Gson();
+
+            Type listType = new TypeToken<ArrayList<subscription>>(){}.getType();
+            subscriptions = gson.fromJson(in, listType);
+        }catch (FileNotFoundException e){
+            subscriptions = new ArrayList<>();
+        }
+    }
+
+    private void saveInFile(){
+        try {
+            Log.v("thing", "memes");
+            FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+            Gson gson = new Gson();
+            gson.toJson(subscriptions, out);
+            out.flush();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException();
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+    }
+
 }

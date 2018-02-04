@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class myAdapter extends ArrayAdapter<subscription> {
 
-    ArrayList<subscription> subscriptions = new ArrayList<>();
+    private ArrayList<subscription> subscriptions = new ArrayList<>();
 
     public myAdapter(Context context, int textViewResourceID, ArrayList<subscription> objects){
         super(context, textViewResourceID, objects);

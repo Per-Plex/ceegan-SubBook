@@ -32,7 +32,8 @@
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
-        android:hint="@string/sub_date"/>
+        android:hint="@string/sub_date"
+        android:maxLength="10"/>
     <EditText
         android:id="@+id/cost"
         android:inputType="numberDecimal"
