@@ -27,7 +27,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements AddSubscription.AddSubscriptionListener, DisplaySubscription.EditSubscriptionListener{
+public class MainActivity extends AppCompatActivity implements AddSubscription.AddSubscriptionListener, EditSubscription.EditSubscriptionListener{
 
     private ArrayList<subscription> subscriptions;
     private myAdapter adapter;
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements AddSubscription.A
                 args.putString("comment", subscriptions.get(i).getComment());
                 args.putInt("position", i);
 
-                DisplaySubscription dialog = new DisplaySubscription();
+                EditSubscription dialog = new EditSubscription();
                 dialog.setArguments(args);
                 dialog.show(getFragmentManager(), "Edit Subscription");
             }

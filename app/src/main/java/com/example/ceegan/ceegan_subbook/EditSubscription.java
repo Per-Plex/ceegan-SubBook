@@ -18,7 +18,7 @@ import android.widget.Toast;
  * Displays the complete info of the subscription when clicked
  */
 
-public class DisplaySubscription extends DialogFragment {
+public class EditSubscription extends DialogFragment {
 
 
     /**
@@ -140,7 +140,7 @@ public class DisplaySubscription extends DialogFragment {
                 EditText cost = content.findViewById(R.id.subscription_cost);
 
                 if (name.getText().length() >= 1 && date.getText().length() == 10 && cost.getText().length() >= 1){
-                    listener.onEditPositive(DisplaySubscription.this, args.getInt("Position"));
+                    listener.onEditPositive(EditSubscription.this, args.getInt("Position"));
                     dialog.dismiss();
                 }
                 else {
